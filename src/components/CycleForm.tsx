@@ -9,7 +9,9 @@ export default function CycleForm({
   handleEndDate,
   startDate,
 }: CycleFormProps) {
-  const today = startDate.toISOString().split("T")[0];
+  const today = new Date().toISOString().split("T")[0];
+  const nextFiveDays = new Date(startDate);
+  nextFiveDays.setDate(startDate.getDate() + 7);
   return (
     <div>
       <p>Please pick your last menstrual start and end date</p>
@@ -38,6 +40,7 @@ export default function CycleForm({
           onChange={(e) => handleEndDate(new Date(e.target.value))}
           disabled={!startDate}
           min={startDate?.toISOString().split("T")[0]}
+          max={nextFiveDays?.toISOString().split("T")[0]}
           type="date"
           placeholder="Last date of last menstrual cycle date"
         />
