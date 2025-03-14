@@ -21,7 +21,9 @@ function App() {
           handleStartDate={handleStartDate}
           startDate={startDate}
         />
-        {startDate && differenceDate && <CycleResult startDate={startDate} />}
+        {startDate && differenceDate && (
+          <CycleResult startDate={startDate} differenceDate={differenceDate} />
+        )}
       </div>
     </>
   );

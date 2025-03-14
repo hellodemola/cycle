@@ -8,10 +8,19 @@ import Cycle from "../helpers/cycle.class";
 
 describe("CYCLERESULT_CLASS_TEST", () => {
   const startDate = new Date("01-01-2001");
-  const nextCycle = new Cycle(startDate);
+  const differenceDate = 5;
+  const endDate = new Date(startDate);
+  endDate.setDate(endDate.getDate() + differenceDate);
+  const nextCycle = new Cycle(startDate, differenceDate);
   test("PERIOD_NEXT_DAY_SHOULD_BE_28_DAYS", () => {
-    expect(nextCycle.allCycles.nextPeriod).toStrictEqual(
-      new Date("01-29-2001")
+    const nextPeriodStartDate = new Date("01-29-2001");
+    const nextPeriodEndDate = new Date(nextPeriodStartDate);
+    nextPeriodEndDate.setDate(nextPeriodEndDate.getDate() + differenceDate);
+    expect(nextCycle.allCycles.nextPeriod.start).toStrictEqual(
+      new Date(nextPeriodStartDate)
+    );
+    expect(nextCycle.allCycles.nextPeriod.end).toStrictEqual(
+      new Date(nextPeriodEndDate)
     );
   });
 
@@ -31,6 +40,7 @@ describe("CYCLERESULT_CLASS_TEST", () => {
   });
 
   test("LAST_PERIOD_SAME_AS_FIRST_DAY_OF_LAST_PERIOD", () => {
-    expect(nextCycle.allCycles.lastPeriod).toStrictEqual(startDate);
+    expect(nextCycle.allCycles.lastPeriod.start).toStrictEqual(startDate);
+    expect(nextCycle.allCycles.lastPeriod.end).toStrictEqual(endDate);
   });
 });

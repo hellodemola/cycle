@@ -1,10 +1,15 @@
 export default class Cycle {
     lastPeriodDate: Date;
     periodLength: number;
+    differenceDay: number;
 
-    constructor(public date: Date, public periodDays = 28) {
+    constructor(
+        public date: Date, 
+        public differencePeriod: number, 
+        public periodDays = 28) {
         this.lastPeriodDate = date;
         this.periodLength = periodDays;
+        this.differenceDay = differencePeriod;
     }
 
     set updatePeriodDays (days: number){
@@ -15,20 +20,31 @@ export default class Cycle {
         return this.periodLength;
     }
 
-    private lastPeriod(): Date {
-        return new Date(this.lastPeriodDate);
+    private lastPeriod(): {start: Date, end: Date} {
+        const start = new Date(this.lastPeriodDate);
+        const end = new Date(start);
+        end.setDate(end.getDate() + this.differenceDay);
+        return {
+            start,
+            end,
+        }
     }
 
-    private nextPeriod(): Date {
-        const firstDay = new Date(this.lastPeriodDate);
-        firstDay.setDate(firstDay.getDate() + this.menstrualCycle());
-        return firstDay;
+    private nextPeriod(): {start: Date, end: Date} {
+        const start = new Date(this.lastPeriodDate);
+        start.setDate(start.getDate() + this.menstrualCycle());
+        const end = new Date(start);
+        end.setDate(end.getDate() + this.differenceDay)
+        return {
+            start,
+            end,
+        }
     }
 
     private ovulationPeriod(): Date {
         const nextPeriodDate = this.nextPeriod();
-        const ovulationDay = new Date(nextPeriodDate);
-        ovulationDay.setDate(nextPeriodDate.getDate() - 14); 
+        const ovulationDay = new Date(nextPeriodDate.start);
+        ovulationDay.setDate(nextPeriodDate.start.getDate() - 14); 
         return ovulationDay;
     }
 
