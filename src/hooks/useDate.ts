@@ -20,12 +20,15 @@ const useDate = () => {
     };
   
     useEffect(() => {
-      if (window.localStorage.getItem(START_DATE)) {
-        setStartDate(new Date(window.localStorage.getItem(START_DATE)));
+      const storedStartDate = window.localStorage.getItem(START_DATE)
+      const storedEndDate = window.localStorage.getItem(END_DATE);
+      
+      if (storedStartDate) {
+        setStartDate(new Date(storedStartDate));
       }
   
-      if (window.localStorage.getItem(END_DATE)) {
-        setEndDate(new Date(window.localStorage.getItem(END_DATE)));
+      if (storedEndDate) {
+        setEndDate(new Date(storedEndDate));
       }
     }, []);
 
