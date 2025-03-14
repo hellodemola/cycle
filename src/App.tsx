@@ -1,16 +1,11 @@
-import { useState } from "react";
 import "./App.css";
-import getDaysBetween from "./helpers/getDaysBetween.ts";
 import CycleResult from "./components/CycleResult.tsx";
 import CycleForm from "./components/CycleForm.tsx";
+import useDate from "./hooks/useDate.ts";
 
 function App() {
-  const [startDate, setStartDate] = useState<Date>(new Date());
-  const [endDate, setEndDate] = useState<Date>();
-  const differenceDate = getDaysBetween(startDate, endDate);
-
-  const handleStartDate = (date: Date) => setStartDate(date);
-  const handleEndDate = (date: Date) => setEndDate(date);
+  const { handleEndDate, handleStartDate, startDate, differenceDate } =
+    useDate();
 
   return (
     <>
